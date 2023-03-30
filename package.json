@@ -1,0 +1,66 @@
+{
+  "name": "onesecmail",
+  "version": "0.0.0",
+  "description": "Create and receive email in only 1 second.",
+  "type": "module",
+  "exports": "./lib/index.js",
+  "types": "./types/index.d.ts",
+  "files": [
+    "lib",
+    "types"
+  ],
+  "scripts": {
+    "build": "del-cli lib types && tsc -p tsconfig.build.json",
+    "lint": "eslint --ext .ts --fix .",
+    "format": "prettier --list-different --write .",
+    "test": "tsx bin/test.ts",
+    "release": "np",
+    "prepublishOnly": "npm run build",
+    "prepare": "husky install"
+  },
+  "keywords": [
+    "1secmail",
+    "api",
+    "email",
+    "mail",
+    "temporary",
+    "temp"
+  ],
+  "author": "Kevin Rouchut <kevin.rouchut@gmail.com>",
+  "repository": "https://github.com/KevinRouchut/OneSecMail",
+  "license": "MIT",
+  "dependencies": {
+    "got": "^12.6.0",
+    "tiny-typed-emitter": "^2.1.0",
+    "zod": "^3.21.4"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^17.5.1",
+    "@commitlint/config-conventional": "^17.4.4",
+    "@japa/expect": "^2.0.2",
+    "@japa/runner": "^2.5.1",
+    "@japa/spec-reporter": "^1.3.3",
+    "@types/node": "^18.15.11",
+    "@typescript-eslint/eslint-plugin": "^5.57.0",
+    "@typescript-eslint/parser": "^5.57.0",
+    "del-cli": "^5.0.0",
+    "eslint": "^8.37.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-import-resolver-typescript": "^3.5.4",
+    "eslint-plugin-import": "^2.27.5",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.2.0",
+    "nock": "^13.3.0",
+    "np": "^7.7.0",
+    "prettier": "^2.8.7",
+    "tsx": "^3.12.6",
+    "typescript": "^5.0.2"
+  },
+  "engines": {
+    "node": ">=16"
+  },
+  "volta": {
+    "node": "18.15.0",
+    "npm": "9.6.2"
+  }
+}
