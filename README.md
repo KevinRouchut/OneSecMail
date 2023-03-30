@@ -36,7 +36,7 @@ pnpm add onesecmail
 Once the package is installed, you can import the library using `import`:
 
 ```ts
-import { OneSecMailAPI } from "onesecmail";
+import { OneSecMail, OneSecMailAPI } from "onesecmail";
 ```
 
 # Example
@@ -76,6 +76,10 @@ const options: Partial<Options> = {
   timeout: 10_000, // milliseconds
 };
 ```
+
+## OneSecMail
+
+Soon...
 
 ## OneSecMailAPI
 

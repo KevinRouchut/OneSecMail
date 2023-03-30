@@ -5,6 +5,15 @@ import type { ShortMessage, Message, Options } from "./types.js";
 
 export const BASE_API_URL = "https://www.1secmail.com/api/v1/";
 
+export const FORBIDDEN_LOGIN = [
+  "abuse",
+  "admin",
+  "contact",
+  "hostmaster",
+  "postmaster",
+  "webmaster",
+];
+
 export default class OneSecMailAPI {
   readonly #got: Got;
   readonly retry: number;
