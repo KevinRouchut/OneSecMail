@@ -39,7 +39,26 @@ Once the package is installed, you can import the library using `import`:
 import { OneSecMail, OneSecMailAPI } from "onesecmail";
 ```
 
-# Example
+# Examples
+
+## OneSecMail
+
+```ts
+import { OneSecMail } from "onesecmail";
+
+const mailbox = await OneSecMail("demo@1secmail.com");
+
+const messages = await mailbox.getMessages();
+
+for (const message of messages) {
+  const fullMessage = await message.fetchFullMessage();
+  console.log(fullMessage.serialize());
+}
+
+await mailbox.clearMessages();
+```
+
+## OneSecMailAPI
 
 ```ts
 import { OneSecMailAPI } from "onesecmail";
