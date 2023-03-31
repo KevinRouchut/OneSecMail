@@ -39,7 +39,7 @@ export default async function OneSecMail(
     throw new Error("Email address must be a valid email address");
   }
 
-  const [local, domain] = emailAddress.split("@");
+  const [local, domain] = emailAddress.toLowerCase().split("@");
 
   if (FORBIDDEN_LOGIN.includes(local)) {
     throw new Error(
@@ -59,7 +59,7 @@ export default async function OneSecMail(
     );
   }
 
-  return new OneSecMailbox(emailAddress, api);
+  return new OneSecMailbox(`${local}@${domain}`, api);
 }
 
 class OneSecMailbox extends TypedEmitter {
