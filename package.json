@@ -1,6 +1,6 @@
 {
   "name": "onesecmail",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "description": "Create and receive email in only 1 second.",
   "type": "module",
   "exports": "./lib/index.js",
