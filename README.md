@@ -125,6 +125,35 @@ await mailbox.clearMessages();
 await mailbox.clearMessages(options);
 ```
 
+### OneSecMailbox.startPolling([intervalTime])
+
+`intervalTime` must be at least 1000.
+
+```ts
+mailbox.startPolling(); // default intervalTime: 5000 milliseconds
+mailbox.startPolling(30_000);
+```
+
+### OneSecMailbox.stopPolling()
+
+```ts
+mailbox.stopPolling();
+```
+
+### OneSecMailbox `events`
+
+```ts
+mailbox.on("newMessage", (message: OneSecMailShortMessage) => {
+  console.log(message.serialize());
+});
+```
+
+```ts
+mailbox.on("error", (error: Error) => {
+  console.error(error);
+});
+```
+
 ### OneSecMailShortMessage.fetchFullMessage([options])
 
 ```ts

@@ -1,8 +1,14 @@
 import { got } from "got";
 import { z } from "zod";
 import { TypedEmitter } from "tiny-typed-emitter";
-import OneSecMailAPI, { FORBIDDEN_LOGIN } from "./OneSecMailAPI.js";
+import OneSecMailAPI, { BASE_API_URL, FORBIDDEN_LOGIN } from "./OneSecMailAPI.js";
+import { shortMessageSchema } from "./schemas.js";
 import type { ShortMessage, Attachment, Message, Options } from "./types.js";
+
+interface OneSecMailboxEvents {
+  newMessage: (message: OneSecMailShortMessage) => void;
+  error: (error: Error) => void;
+}
 
 export default async function OneSecMail(emailAddress?: string): Promise<OneSecMailbox>;
 export default async function OneSecMail(options: Partial<Options>): Promise<OneSecMailbox>;
@@ -62,10 +68,14 @@ export default async function OneSecMail(
   return new OneSecMailbox(`${local}@${domain}`, api);
 }
 
-class OneSecMailbox extends TypedEmitter {
+class OneSecMailbox extends TypedEmitter<OneSecMailboxEvents> {
   readonly #api: OneSecMailAPI;
   readonly #local: string;
   readonly #domain: string;
+  readonly #controller: AbortController;
+  #state: "STARTED" | "STOPPED" = "STOPPED";
+  #lastMessageid = 0;
+  #intervalTimer!: NodeJS.Timer;
   readonly emailAddress: string;
 
   constructor(emailAddress: string, api: OneSecMailAPI) {
@@ -74,6 +84,7 @@ class OneSecMailbox extends TypedEmitter {
     this.#api = api;
     this.#local = local;
     this.#domain = domain;
+    this.#controller = new AbortController();
     this.emailAddress = emailAddress;
   }
 
@@ -103,6 +114,66 @@ class OneSecMailbox extends TypedEmitter {
     } catch (e) {
       throw new Error("HTTP request failed");
     }
+  }
+
+  async #polling(intervalTime: number) {
+    const start = new Date().getTime();
+    try {
+      const { body } = await got.get(BASE_API_URL, {
+        searchParams: { action: "getMessages", login: this.#local, domain: this.#domain },
+        retry: { limit: 0 },
+        timeout: { request: 3000 },
+        signal: this.#controller.signal,
+      });
+
+      const schema = z.array(shortMessageSchema);
+
+      let messages: ShortMessage[];
+      try {
+        messages = schema.parse(JSON.parse(body));
+      } catch (e) {
+        throw new Error("Malformed response");
+      }
+
+      messages.sort((a, b) => a.id - b.id);
+      messages = messages.filter((message) => message.id > this.#lastMessageid);
+      this.#lastMessageid = messages.at(-1)?.id ?? this.#lastMessageid;
+
+      for (const message of messages) {
+        this.emit("newMessage", new OneSecMailShortMessage(this.emailAddress, message, this.#api));
+      }
+
+      const end = new Date().getTime();
+      const diff = end - start;
+      this.#intervalTimer = setTimeout(this.#polling.bind(this), intervalTime - diff, intervalTime);
+    } catch (error) {
+      if (error instanceof Error && error.name !== "AbortError") {
+        const end = new Date().getTime();
+        const diff = end - start;
+        this.#intervalTimer = setTimeout(
+          this.#polling.bind(this),
+          intervalTime - diff,
+          intervalTime
+        );
+        this.emit("error", error);
+      }
+    }
+  }
+
+  startPolling(intervalTime = 5000): boolean {
+    if (intervalTime < 100) throw new RangeError("`intervalTime` must be at least 1000");
+    if (this.#state === "STARTED") return false;
+    this.#polling(intervalTime);
+    this.#state = "STARTED";
+    return true;
+  }
+
+  stopPolling(): boolean {
+    if (this.#state === "STOPPED") return false;
+    this.#controller.abort();
+    clearTimeout(this.#intervalTimer);
+    this.#state = "STOPPED";
+    return true;
   }
 }
 
