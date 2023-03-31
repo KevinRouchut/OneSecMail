@@ -4,8 +4,6 @@ import OneSecMailAPI, { BASE_API_URL } from "../src/OneSecMailAPI.js";
 import { type Options } from "../src/types.js";
 import { IncomingMessage } from "node:http";
 
-nock.disableNetConnect();
-
 const options: Options = {
   retry: 0,
   timeout: 1000,
