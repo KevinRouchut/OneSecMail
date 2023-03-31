@@ -3,8 +3,10 @@
   "version": "0.3.0",
   "description": "Create and receive email in only 1 second.",
   "type": "module",
-  "exports": "./lib/index.js",
-  "types": "./types/index.d.ts",
+  "exports": {
+    "import": "./lib/index.js",
+    "types": "./types/index.d.ts"
+  },
   "files": [
     "lib",
     "types"
