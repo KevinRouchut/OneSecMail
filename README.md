@@ -117,7 +117,7 @@ All methods return a _Promise_.
 
 #### genRandomMailbox([count[, options]])
 
-`count` must be between 1 and 500
+`count` must be between 1 and 500.
 
 ```ts
 const emailAddresses = await api.genRandomMailbox(); // same to: genRandomMailbox(1)
@@ -126,12 +126,16 @@ const emailAddresses = await api.genRandomMailbox(options); // same to: genRando
 const emailAddresses = await api.genRandomMailbox(5, options);
 ```
 
+Returns an array of generated email addresses.
+
 #### getDomainList([options])
 
 ```ts
 const domainList = await api.getDomainList();
 const domainList = await api.getDomainList(options);
 ```
+
+Returns an array of active domains.
 
 #### getMessages(login, domain[, options])
 
@@ -140,6 +144,8 @@ const messages = await api.getMessages("demo", "1secmail.com");
 const messages = await api.getMessages("demo", "1secmail.com", options);
 ```
 
+Returns an array of ShortMessage (message with no body and attachments).
+
 #### readMessage(login, domain, id[, options])
 
 ```ts
@@ -147,7 +153,7 @@ const message = await api.readMessage("demo", "1secmail.com", 639);
 const message = await api.readMessage("demo", "1secmail.com", 639, options);
 ```
 
-Returns _null_ if message do not exists.
+Returns a Message if the message exists, otherwise returns null.
 
 #### download(login, domain, id, file[, options])
 
@@ -156,7 +162,7 @@ const file = await api.download("demo", "1secmail.com", 639, "iometer.pdf");
 const file = await api.download("demo", "1secmail.com", 639, "iometer.pdf", options);
 ```
 
-Returns _null_ if file do not exists.
+Returns a Buffer if the file exists, otherwise returns null.
 
 [npm-url]: https://www.npmjs.com/package/onesecmail
 [npm-version-badge]: https://img.shields.io/npm/v/onesecmail
