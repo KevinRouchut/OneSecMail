@@ -98,7 +98,52 @@ const options: Partial<Options> = {
 
 ## OneSecMail
 
-Soon...
+### Create a mailbox
+
+```ts
+const mailbox = await OneSecMail();
+const mailbox = await OneSecMail("demo@1secmail.com");
+const mailbox = await OneSecMail(options);
+const mailbox = await OneSecMail("demo@1secmail.com", options);
+```
+
+Returns an instance of `OneSecMailbox`.
+
+### OneSecMailbox.getMessages([options])
+
+```ts
+const messages = await mailbox.getMessages();
+const messages = await mailbox.getMessages(options);
+```
+
+Returns an array of `OneSecMailShortMessage` instances.
+
+### OneSecMailbox.clearMessages([options])
+
+```ts
+await mailbox.clearMessages();
+await mailbox.clearMessages(options);
+```
+
+### OneSecMailShortMessage.fetchFullMessage([options])
+
+```ts
+const fullMessage = await message.fetchFullMessage();
+const fullMessage = await message.fetchFullMessage(options);
+```
+
+Returns an instance of `OneSecMailMessage` if the message still exists, otherwise throw an error.
+
+`OneSecMailMessage` has an **attachments** field that contains an array of `OneSecMailAttachment` instances.
+
+### OneSecMailAttachment.download([options])
+
+```ts
+const file = await attachment.download();
+const file = await attachment.download(options);
+```
+
+Returns a Buffer if the file still exists, otherwise throw an error.
 
 ## OneSecMailAPI
 
@@ -113,7 +158,7 @@ const api = new OneSecMailAPI(options);
 
 ### Instance methods
 
-All methods return a _Promise_.
+All methods return a **Promise**.
 
 #### genRandomMailbox([count[, options]])
 
