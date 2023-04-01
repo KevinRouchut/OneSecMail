@@ -161,7 +161,7 @@ class OneSecMailbox extends TypedEmitter<OneSecMailboxEvents> {
   }
 
   startPolling(intervalTime = 5000): boolean {
-    if (intervalTime < 100) throw new RangeError("`intervalTime` must be at least 1000");
+    if (intervalTime < 1000) throw new RangeError("`intervalTime` must be at least 1000");
     if (this.#state === "STARTED") return false;
     this.#polling(intervalTime);
     this.#state = "STARTED";
