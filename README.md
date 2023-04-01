@@ -1,13 +1,15 @@
 ![logo](https://i.imgur.com/FJhgTTl.jpg)
 
----
-
 [![npm version][npm-version-badge]][npm-url]
 [![npm downloads][npm-downloads-badge]][npm-url]
 [![npm install size][npm-install-size-badge]][npm-install-size-url]
 [![node version][node-version-badge]][node-version-url]
 
-Create and receive email in only 1 second.
+Package using the [1secmail.com](https://www.1secmail.com) service.
+
+**Create and receive email in only 1 second.**
+
+---
 
 # Installation
 
