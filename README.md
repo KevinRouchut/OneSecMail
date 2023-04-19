@@ -1,4 +1,6 @@
-![logo](https://i.imgur.com/FJhgTTl.jpg)
+<p align="center">
+  <img src="https://i.imgur.com/FJhgTTl.jpg" alt="logo">
+</p>
 
 [![npm version][npm-version-badge]][npm-url]
 [![npm downloads][npm-downloads-badge]][npm-url]
