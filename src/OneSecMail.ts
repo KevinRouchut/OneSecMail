@@ -118,6 +118,7 @@ class OneSecMailbox extends TypedEmitter<OneSecMailboxEvents> {
 
   async #polling(intervalTime: number) {
     const start = new Date().getTime();
+    let rerun = false;
     try {
       const { body } = await got.get(BASE_API_URL, {
         searchParams: { action: "getMessages", login: this.#local, domain: this.#domain },
@@ -143,20 +144,18 @@ class OneSecMailbox extends TypedEmitter<OneSecMailboxEvents> {
         this.emit("newMessage", new OneSecMailShortMessage(this.emailAddress, message, this.#api));
       }
 
+      rerun = true;
+    } catch (error) {
+      if (error instanceof Error && error.name !== "AbortError") {
+        this.emit("error", error);
+        rerun = true;
+      }
+    }
+
+    if (rerun) {
       const end = new Date().getTime();
       const diff = end - start;
       this.#intervalTimer = setTimeout(this.#polling.bind(this), intervalTime - diff, intervalTime);
-    } catch (error) {
-      if (error instanceof Error && error.name !== "AbortError") {
-        const end = new Date().getTime();
-        const diff = end - start;
-        this.#intervalTimer = setTimeout(
-          this.#polling.bind(this),
-          intervalTime - diff,
-          intervalTime
-        );
-        this.emit("error", error);
-      }
     }
   }
 
