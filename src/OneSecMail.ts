@@ -122,7 +122,7 @@ class OneSecMailbox extends TypedEmitter<OneSecMailboxEvents> {
       const { body } = await got.get(BASE_API_URL, {
         searchParams: { action: "getMessages", login: this.#local, domain: this.#domain },
         retry: { limit: 0 },
-        timeout: { request: 3000 },
+        timeout: { request: 5_000 },
         signal: this.#controller.signal,
       });
 
