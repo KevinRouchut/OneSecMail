@@ -27,7 +27,7 @@ export default class OneSecMailAPI {
 
   async request(searchParams: SearchParameters, options?: Partial<Options>) {
     try {
-      return this.#got({
+      return await this.#got({
         searchParams,
         retry: {
           limit: options?.retry ?? this.retry,
