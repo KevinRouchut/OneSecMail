@@ -85,7 +85,7 @@ export default class OneSecMailAPI {
   async getMessages(
     login: string,
     domain: string,
-    options?: Partial<Options>
+    options?: Partial<Options>,
   ): Promise<ShortMessage[]> {
     const { body } = await this.request({ action: "getMessages", login, domain }, options);
 
@@ -102,7 +102,7 @@ export default class OneSecMailAPI {
     login: string,
     domain: string,
     id: number,
-    options?: Partial<Options>
+    options?: Partial<Options>,
   ): Promise<Message | null> {
     const { body } = await this.request({ action: "readMessage", login, domain, id }, options);
 
@@ -120,11 +120,11 @@ export default class OneSecMailAPI {
     domain: string,
     id: number,
     file: string,
-    options?: Partial<Options>
+    options?: Partial<Options>,
   ): Promise<Buffer | null> {
     const { body, headers } = await this.request(
       { action: "download", login, domain, id, file },
-      options
+      options,
     );
 
     if (headers["content-disposition"] !== `attachment; filename="${file}"`) return null;

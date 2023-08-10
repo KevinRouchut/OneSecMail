@@ -14,11 +14,11 @@ export default async function OneSecMail(emailAddress?: string): Promise<OneSecM
 export default async function OneSecMail(options: Partial<Options>): Promise<OneSecMailbox>;
 export default async function OneSecMail(
   emailAddress: string,
-  options?: Partial<Options>
+  options?: Partial<Options>,
 ): Promise<OneSecMailbox>;
 export default async function OneSecMail(
   a?: string | Partial<Options>,
-  b?: Partial<Options>
+  b?: Partial<Options>,
 ): Promise<OneSecMailbox> {
   let emailAddress: string | null = null;
   let options: Partial<Options> = {};
@@ -50,8 +50,8 @@ export default async function OneSecMail(
   if (FORBIDDEN_LOGIN.includes(local)) {
     throw new Error(
       `For security reason you cannot read messages from addresses: ${FORBIDDEN_LOGIN.map(
-        (local) => `${local}@${domain}`
-      ).join(", ")}`
+        (local) => `${local}@${domain}`,
+      ).join(", ")}`,
     );
   }
 
@@ -61,7 +61,7 @@ export default async function OneSecMail(
     throw new Error(
       `Email address must contain a domain contained in the following list: ${domainList
         .map((domain) => `${local}@${domain}`)
-        .join(", ")}`
+        .join(", ")}`,
     );
   }
 
@@ -279,7 +279,7 @@ class OneSecMailAttachment {
       this.#domain,
       this.#messageId,
       this.filename,
-      options
+      options,
     );
 
     if (!file) throw new Error("File no longer exists");
