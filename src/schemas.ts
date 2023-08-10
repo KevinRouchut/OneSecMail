@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const shortMessageSchema = z.object({
-  id: z.number().safe().positive(),
+  id: z.number().int().safe().positive(),
   from: z.string().email(),
   subject: z.string(),
   date: z.string().nonempty(),
@@ -10,7 +10,7 @@ export const shortMessageSchema = z.object({
 export const attachmentSchema = z.object({
   filename: z.string().nonempty(),
   contentType: z.string().nonempty(),
-  size: z.number().safe().nonnegative(),
+  size: z.number().int().safe().nonnegative(),
 });
 
 export const messageSchema = shortMessageSchema.extend({
