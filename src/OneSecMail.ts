@@ -75,7 +75,7 @@ class OneSecMailbox extends TypedEmitter<OneSecMailboxEvents> {
   readonly #controller: AbortController;
   #state: "STARTED" | "STOPPED" = "STOPPED";
   #lastMessageid = 0;
-  #intervalTimer!: NodeJS.Timer;
+  #intervalTimer!: NodeJS.Timeout;
   readonly emailAddress: string;
 
   constructor(emailAddress: string, api: OneSecMailAPI) {
