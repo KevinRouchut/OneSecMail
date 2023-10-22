@@ -2,8 +2,8 @@
   "compilerOptions": {
     "outDir": "lib",
     "declarationDir": "types",
-    "target": "ES2021",
-    "lib": ["ES2021"],
+    "target": "ES2022",
+    "lib": ["ES2022"],
     "module": "node16",
     "moduleResolution": "node16",
     "esModuleInterop": true,
