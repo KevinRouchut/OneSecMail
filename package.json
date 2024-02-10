@@ -18,7 +18,7 @@
     "test": "tsx bin/test.ts",
     "release": "np",
     "prepublishOnly": "npm run build",
-    "prepare": "husky install"
+    "prepare": "husky"
   },
   "keywords": [
     "1secmail",
@@ -48,7 +48,7 @@
     "eslint": "^8.56.0",
     "eslint-import-resolver-typescript": "^3.6.1",
     "eslint-plugin-import": "^2.29.1",
-    "husky": "^8.0.3",
+    "husky": "^9.0.10",
     "lint-staged": "^15.2.0",
     "nock": "^13.5.0",
     "np": "^9.2.0",
